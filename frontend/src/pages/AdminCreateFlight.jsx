@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { getFlights, createFlight, updateFlight, deleteFlight, checkForConflicts } from '../api/flightService';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../components/useAuth';
+import Button from "../components/base/Button";
+import Input from "../components/base/Input";
+import DatePicker from "../components/base/DatePicker";
 
 const AdminCreateFlight = () => {
     const { isAuthenticated, userRole } = useAuth();
@@ -102,65 +105,52 @@ const AdminCreateFlight = () => {
         <div className="p-6 max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold mb-6">{isEditing ? 'Update Flight' : 'Create a New Flight'}</h2>
             <div className="space-y-4">
-                <input
-                    type="text"
-                    name="departureCity"
-                    placeholder="Departure City"
+                <Input type={"text"}
+                    name={"departureCity"}
+                    placeholder={"Departure City"}
                     value={flightForm.departureCity}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                />
-                <input
-                    type="text"
+                    className={"w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"} />
+                <Input type="text"
                     name="arrivalCity"
                     placeholder="Arrival City"
                     value={flightForm.arrivalCity}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                />
+                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600" />
                 <div>
                     <label className="block mb-2">Departure Time:</label>
-                    <input
-                        type="datetime-local"
-                        name="departureTime"
+                    <DatePicker type={"datetime-local"}
+                        name={"departureTime"}
                         value={flightForm.departureTime}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                    />
+                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600" />
                 </div>
                 <div>
                     <label className="block mb-2">Arrival Time:</label>
-                    <input
-                        type="datetime-local"
-                        name="arrivalTime"
+                    <DatePicker type={"datetime-local"}
+                        name={"arrivalTime"}
                         value={flightForm.arrivalTime}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                    />
+                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600" />
                 </div>
                 <div className="space-x-2">
-                    <button
-                        onClick={handleCreateOrUpdate}
+                    <Button onClick={handleCreateOrUpdate}
                         className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
-                    >
-                        {isEditing ? 'Update Flight' : 'Create Flight'}
-                    </button>
+                        label={isEditing ? 'Update Flight' : 'Create Flight'} />
                     {isEditing && (
-                        <button
-                            onClick={() => {
-                                setIsEditing(false);
-                                setFlightForm({
-                                    id: null,
-                                    departureCity: '',
-                                    arrivalCity: '',
-                                    departureTime: '',
-                                    arrivalTime: ''
-                                });
-                            }}
+
+                        <Button onClick={() => {
+                            setIsEditing(false);
+                            setFlightForm({
+                                id: null,
+                                departureCity: '',
+                                arrivalCity: '',
+                                departureTime: '',
+                                arrivalTime: ''
+                            });
+                        }}
                             className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-500"
-                        >
-                            Cancel
-                        </button>
+                            label={"Cancel"} />
                     )}
                 </div>
             </div>
@@ -190,18 +180,12 @@ const AdminCreateFlight = () => {
                                 {new Date(flight.arrivalTime).toLocaleString()}
                             </td>
                             <td className="px-4 py-2 border-b space-x-2 flex">
-                                <button
-                                    onClick={() => handleEdit(flight)}
+                                <Button onClick={() => handleEdit(flight)}
                                     className="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-400"
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(flight.id)}
+                                    label={"Edit"} />
+                                <Button onClick={() => handleDelete(flight.id)}
                                     className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-500"
-                                >
-                                    Delete
-                                </button>
+                                    label={"Delete"} />
                             </td>
                         </tr>
                     ))}

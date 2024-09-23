@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../components/useAuth"; // Import the useAuth hook
 import { Navigate } from "react-router-dom";
+import Button from "../components/base/Button";
+import Input from "../components/base/Input";
+import DatePicker from "../components/base/DatePicker";
 
 const FlightSearch = () => {
   const { isAuthenticated, userRole, isLoading } = useAuth(); // Use the hook to get the user's authentication and role
@@ -60,7 +63,8 @@ const FlightSearch = () => {
           <label className="block text-gray-700 mb-2" htmlFor="departure">
             Kalkış Yeri
           </label>
-          <input
+
+          <Input
             id="departure"
             type="text"
             value={departure}
@@ -74,13 +78,13 @@ const FlightSearch = () => {
           <label className="block text-gray-700 mb-2" htmlFor="destination">
             Varış Yeri
           </label>
-          <input
-            id="destination"
-            type="text"
-            value={destination}
+          <Input
             onChange={(e) => setDestination(e.target.value)}
-            placeholder="Varış Yeri"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={destination}
+            type={"text"}
+            id="destination"
+            placeholder="Varış Yeri"
           />
         </div>
 
@@ -88,21 +92,13 @@ const FlightSearch = () => {
           <label className="block text-gray-700 mb-2" htmlFor="date">
             Tarih
           </label>
-          <input
-            id="date"
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+          <DatePicker onChange={(e) => setDate(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+            value={date}
+            type={date}
+            id={date} />
         </div>
-
-        <button
-          onClick={() => searchFlights()} // Call searchFlights when manually triggered
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
-        >
-          Uçuş Ara
-        </button>
+        <Button onClick={() => searchFlights()} className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200" label={"Uçuş Ara"} />
       </div>
 
       {/* Displaying Flight Results */}

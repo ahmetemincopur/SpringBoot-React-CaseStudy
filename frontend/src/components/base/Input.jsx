@@ -1,9 +1,10 @@
 // src/components/base/Input.js
 import React from 'react';
 
-const Input = ({ type, value, onChange, placeholder, ...props }) => {
+const Input = ({ type, name, value, onChange, placeholder, ...props }) => {
     return (
         <input
+            name={name}
             type={type}
             value={value}
             onChange={onChange}
